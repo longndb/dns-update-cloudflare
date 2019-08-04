@@ -28,18 +28,16 @@ else:
     result = json.loads(request.text)['result']
 
     for each in result:
-        if each['name'] in domain:
-            request = rq.get(url=url+r'/'+str(each['id'])+r'/dns_records', headers=headers)
-            for dm in json.loads(request.text)['result']:
-                if dm['name'] == domain:
-                    request = rq.put(url=url+r'/'+str(each['id'])+r'/dns_records/'+str(dm['id']), data=json.dumps(data)
-                                     , headers=headers)
-                    if request.status_code == 200:
-                        print("Update DNS record successfully")
-                        sys.exit(1)
-            else:
-                print("The domain can not be found")
-        else:
-            print("Token can not access to domain {}".format(domain))
-
-
+        if not each['name'] in domain:
+            continue
+        request = rq.get(url=url+r'/'+str(each['id'])+r'/dns_records', headers=headers)
+        for dm in json.loads(request.text)['result']:
+            if not dm['name'] == domain:
+                continue
+            request = rq.put(url=url + r'/' + str(each['id']) + r'/dns_records/' + str(dm['id']), data=json.dumps(data)
+                             , headers=headers)
+            if request.status_code == 200:
+                print("Update DNS record successfully")
+                sys.exit(1)
+    else:
+        print("The domain can not be found")
