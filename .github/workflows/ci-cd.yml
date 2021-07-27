@@ -17,6 +17,14 @@ jobs:
     - run: mkdir build
     - run: echo "cdf" > build/test.txt
 
+    - run: |
+        echo "$ABC"
+        echo "CDF"
+      shell: bash
+      env:
+        ABC: ${{ secrets.ABC }}
+        CDF: ${{ secrets.CDF }}
+
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
       with:
