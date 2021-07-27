@@ -24,16 +24,20 @@ jobs:
           path: build/
 
 
-  qa:
-    name: Deploy QA
+  deploy:
+    strategy:
+      matrix:
+        environemt: [qa, prod]
 
-    environment: qa
+    name: Deploy ${{ matrix.environemt }}
+
+    environment: ${{ matrix.environemt }}
 
     needs: build
 
     runs-on: ubuntu-latest
 
-    steps: &deploySteps
+    steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -54,15 +58,3 @@ jobs:
 
       - name: Deploy static site to S3 bucket
         run: aws s3 sync ./build/ s3://${{ secrets.BUCKET }}
-
-
-  prod:
-    name: Deploy Prod
-
-    environment: prod
-
-    needs: [build, qa]
-
-    runs-on: ubuntu-latest
-
-    <<: *deploySteps
