@@ -17,8 +17,6 @@ jobs:
 
     environment: ${{ matrix.environemt }}
 
-    needs: build
-
     runs-on: ubuntu-latest
 
     steps:
