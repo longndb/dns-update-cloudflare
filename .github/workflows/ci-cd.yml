@@ -15,13 +15,14 @@ jobs:
 
     steps:
     - run: mkdir build
-    - run: echo "cdf" > build/test.txt
+    - run: echo "efgh" > build/test.txt
 
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
       with:
           name: build
           path: build/
+
   deploy:
     strategy:
       matrix:
