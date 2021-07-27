@@ -1,14 +1,28 @@
-name: cd
+name: ci-cd
 
 on:
-  workflow_run:
-    workflows: ["ci"]
-    branches: [master]
-    types: 
-      - completed
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
- deploy:
+  build:
+
+    name: Build & run Tests
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: mkdir build
+    - run: echo "cdf" > build/test.txt
+
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v2
+      with:
+          name: build
+          path: build/
+  deploy:
     strategy:
       matrix:
         environemt: [qa, prod]
@@ -18,6 +32,9 @@ jobs:
     environment: ${{ matrix.environemt }}
 
     runs-on: ubuntu-latest
+
+    needs: build
+    if: github.ref == 'refs/heads/master'
 
     steps:
       - name: Configure AWS Credentials
