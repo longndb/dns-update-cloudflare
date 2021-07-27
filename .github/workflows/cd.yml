@@ -1,30 +1,11 @@
-name: ci-cd
+name: cd
 
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
-  build:
-
-    name: Build & run Tests
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - run: mkdir build
-    - run: echo "abc" > build/test.txt
-
-    - name: Archive artifacts
-      uses: actions/upload-artifact@v2
-      with:
-          name: build
-          path: build/
-
-
-  deploy:
+ deploy:
     strategy:
       matrix:
         environemt: [qa, prod]
