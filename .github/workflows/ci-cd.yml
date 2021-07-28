@@ -58,6 +58,14 @@ jobs:
           name: build
           path: build
 
+      - run: |
+          echo "$ABC"
+          echo "CDF"
+        shell: bash
+        env:
+          ABC: ${{ secrets.ABC }}
+          CDF: ${{ secrets.CDF }}
+
       - name: List
         run: |
           ls -la
