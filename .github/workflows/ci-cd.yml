@@ -33,7 +33,7 @@ jobs:
   deploy:
     strategy:
       matrix:
-        environemt: [qa, prod]
+        environemt: [QA, PROD]
 
     name: Deploy ${{ matrix.environemt }}
 
@@ -60,11 +60,11 @@ jobs:
 
       - run: |
           echo "$ABC"
-          echo "CDF"
+          echo "$CDF"
         shell: bash
         env:
-          ABC: ${{ secrets.ABC }}
-          CDF: ${{ secrets.CDF }}
+          ABC: ${{ secrets.${{ matrix.environemt }}_ABC }}
+          CDF: ${{ secrets.${{ matrix.environemt }} }}
 
       - name: List
         run: |
