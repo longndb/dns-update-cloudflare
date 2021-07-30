@@ -4,11 +4,10 @@ on:
   push:
     branches: [ master ]
   pull_request:
-    type: [opened, labeled, unlabeled, synchronize]
+    types: [ opened, labeled ]
     branches: [ master ]
   release:
-    types:
-      - released
+    types: [ released ]
 
 jobs:
   build:
@@ -84,7 +83,7 @@ jobs:
     runs-on: ubuntu-latest
 
     needs: build
-    if: github.ref == 'refs/heads/master'
+    if: github.event_name == 'release' && github.event.action == 'prereleased'
 
     steps:
       - name: Configure AWS Credentials
