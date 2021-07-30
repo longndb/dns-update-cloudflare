@@ -36,22 +36,23 @@ jobs:
           echo "::set-output name=artifacts_exist::False"
         fi
     - run: echo ${{ steps.check_artifacts.outputs.artifacts_exist }}
-    - run: mkdir build
-      if: ${{ steps.check_artifacts.outputs.artifacts_exist }} == "False""
-    - run: echo "cdf" > build/test.txt
-      if: ${{ steps.check_artifacts.outputs.artifacts_exist }} == "False""
 
-    - run: |
+    - if: ${{ steps.check_artifacts.outputs.artifacts_exist == 'False' }}
+      run: mkdir build
+    - if: ${{ steps.check_artifacts.outputs.artifacts_exist == 'False' }}
+      run: echo "cdf" > build/test.txt
+
+    - if: ${{ steps.check_artifacts.outputs.artifacts_exist == 'False' }}
+      run: |
         echo "$ABC"
         echo "CDF"
       shell: bash
       env:
         ABC: ${{ secrets.ABC }}
         CDF: ${{ secrets.CDF }}
-      if: steps.check_artifacts.outputs.artifacts_exist == 'False'
 
     - name: Archive artifacts
-      if: steps.check_artifacts.outputs.artifacts_exist == 'False'
+      if: ${{ steps.check_artifacts.outputs.artifacts_exist == 'False' }}
       uses: actions/upload-artifact@v2
       with:
           name: ${{ github.sha }}
@@ -85,7 +86,6 @@ jobs:
         id: tag_version
         uses: mathieudutour/github-tag-action@v5.6
         with:
-          fetch_all_tags: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pre_release_branches: main,master
           release_branches: ""
