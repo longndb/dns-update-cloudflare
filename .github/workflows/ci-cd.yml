@@ -28,7 +28,7 @@ jobs:
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
       with:
-          name: $GITHUB_SHA
+          name: ${{ github.sha }}
           path: build/
 
   deploy-qa:
