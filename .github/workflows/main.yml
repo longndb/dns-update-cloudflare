@@ -28,7 +28,7 @@ jobs:
           | jq .artifacts \
           | jq -c 'map(select(.name | contains("${{ github.sha }}")))'`
         echo "$ARITIFACTS"
-        if [[ $ARITIFACTS != "\[\]" ]]; then
+        if [[ $ARITIFACTS != "[]" ]]; then
           echo "True"
           echo "::set-output name=artifacts_exist::True"
         else
@@ -75,6 +75,7 @@ jobs:
   #           *.jar
   pre-release:
     name: Prerelease
+    needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
