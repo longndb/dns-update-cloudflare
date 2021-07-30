@@ -85,7 +85,6 @@ jobs:
         id: tag_version
         uses: mathieudutour/github-tag-action@v5.6
         with:
-          fetch_all_tags: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pre_release_branches: main,master
           release_branches: ""
