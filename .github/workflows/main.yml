@@ -29,11 +29,13 @@ jobs:
           | jq -c 'map(select(.name | contains("${{ github.sha }}")))'`
         echo "$ARITIFACTS"
         if [[ $ARITIFACTS != "\[\]" ]]; then
+          echo "True"
           echo "::set-output name=artifacts_exist::True"
         else
+          echo "False"
           echo "::set-output name=artifacts_exist::False"
         fi
-
+    - run: echo ${{ steps.check_artifacts.outputs.artifacts_exist }}
     - run: mkdir build
       if: ${{ steps.check_artifacts.outputs.artifacts_exist }} == "False""
     - run: echo "cdf" > build/test.txt
