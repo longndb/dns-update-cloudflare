@@ -1,3 +1,5 @@
+[![Build and Deploy](https://github.com/longndb/dns-update-cloudflare/actions/workflows/main.yml/badge.svg)](https://github.com/longndb/dns-update-cloudflare/actions/workflows/main.yml)
+
 # dns-update-cloudflare
 Update server's IP public to DNS Record on Cloudflare.
 
