@@ -157,6 +157,7 @@ jobs:
     if: github.event_name == 'release' && github.event.action == 'released'
 
     steps:
+      - run: echo ${{ github.ref }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
