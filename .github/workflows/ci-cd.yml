@@ -28,16 +28,11 @@ jobs:
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
       with:
-          name: build
+          name: $GITHUB_SHA
           path: build/
-  deploy:
-    strategy:
-      matrix:
-        environemt: [QA, PROD]
 
-    name: Deploy ${{ matrix.environemt }}
-
-    environment: ${{ matrix.environemt }}
+  deploy-qa:
+    name: Deploy QA
 
     runs-on: ubuntu-latest
 
@@ -63,8 +58,8 @@ jobs:
           echo "$CDF"
         shell: bash
         env:
-          ABC: ${{ secrets.${{ matrix.environemt }}_ABC }}
-          CDF: ${{ secrets.${{ matrix.environemt }} }}
+          ABC: ${{ secrets. }}
+          CDF: ${{ secrets.CDF }}
 
       - name: List
         run: |
