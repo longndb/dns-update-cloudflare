@@ -25,10 +25,10 @@ jobs:
 
         echo "$ARITIFACTS"
 
-        if [[ $ARITIFACTS != "\[\]" ]]; then
-          echo "echo "::set-output name=artifacts_exist::True"
-        else
-          echo "echo "::set-output name=artifacts_exist::False"
+        if [[ $ARITIFACTS != "[]" ]]; then
+            echo "::set-output name=artifacts_exist::True"
+          else
+            echo "::set-output name=artifacts_exist::False"
         fi
         
     - run: mkdir build
