@@ -25,7 +25,7 @@ jobs:
 
         echo "$ARITIFACTS"
 
-        if [[ $ARITIFACTS ne "\[\]" ]]; then
+        if [[ $ARITIFACTS != "\[\]" ]]; then
           echo "echo "::set-output name=artifacts_exist::True"
         else
           echo "echo "::set-output name=artifacts_exist::False"
