@@ -7,7 +7,7 @@ on:
     types: [ opened, labeled ]
     branches: [ master ]
   release:
-    types: [ created, released ]
+    types: [ created, released, prereleased ]
 
 jobs:
   build:
