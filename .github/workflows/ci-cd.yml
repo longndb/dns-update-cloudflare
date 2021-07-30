@@ -14,6 +14,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Check artifacts exists
+      run: |
+        ARITIFACTS=`curl \
+          --header "authorization: Bearer ${{ secrets.GITHUB_TOKEN }}"" \
+          --header "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/actions/artifacts \
+          | jq .artifacts \
+          | jq -c 'map(select(.name | contains(${{ github.sha }})))`
+
+        if [[ $ARITIFACTS != "[]" ]]; then
+          echo "echo "::set-output name=artifacts_exist::True"
+        else
+          echo "echo "::set-output name=artifacts_exist::False"
+        fi
+        
     - run: mkdir build
     - run: echo "cdf" > build/test.txt
 
