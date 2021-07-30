@@ -58,7 +58,7 @@ jobs:
           echo "$CDF"
         shell: bash
         env:
-          ABC: ${{ secrets. }}
+          ABC: ${{ secrets.ABC }}
           CDF: ${{ secrets.CDF }}
 
       - name: List
