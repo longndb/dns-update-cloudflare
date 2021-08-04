@@ -35,12 +35,12 @@ jobs:
         fi
     - run: echo ${{ steps.check_artifacts.outputs.artifacts_exist }}
 
-    - if: ${{ steps.check_artifacts.outputs.artifacts_exist }}
+    - if: ${{ ! steps.check_artifacts.outputs.artifacts_exist }}
       run: mkdir build
-    - if: ${{ steps.check_artifacts.outputs.artifacts_exist }}
+    - if: ${{ ! steps.check_artifacts.outputs.artifacts_exist }}
       run: echo "cdf" > build/test.txt
 
-    - if: ${{ steps.check_artifacts.outputs.artifacts_exist }}
+    - if: ${{ ! steps.check_artifacts.outputs.artifacts_exist }}
       run: |
         echo "$ABC"
         echo "CDF"
@@ -50,7 +50,7 @@ jobs:
         CDF: ${{ secrets.CDF }}
 
     - name: Archive artifacts
-      if: ${{ steps.check_artifacts.outputs.artifacts_exist }}
+      if: ${{ ! steps.check_artifacts.outputs.artifacts_exist }}
       uses: actions/upload-artifact@v2
       with:
           name: ${{ github.sha }}
