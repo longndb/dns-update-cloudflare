@@ -167,14 +167,14 @@ jobs:
           aws-region: ap-southeast-1
 
       - name: Download artifact from previous job
-        if: ${{ jobs.build.ouputs.artifacts_not_exist }}
+        if: ${{ needs.build.ouputs.artifacts_not_exist }}
         uses: actions/download-artifact@v2
         with:
           name: ${{ github.sha }}
           path: build
 
       - name: Download artifact from other workflow
-        if: ${{ jobs.build.ouputs.artifacts_not_exist == false }}
+        if: ${{ needs.build.ouputs.artifacts_not_exist == false }}
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: main.yml
