@@ -167,10 +167,10 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: main.yml
+          workflow_conclusion: success,neutral,completed,in_progress
           commit: ${{ github.sha }}
           name: ${{ github.sha }}
           path: build
-          workflow_conclusion: neutral
 
       - run: |
           echo "$ABC"
