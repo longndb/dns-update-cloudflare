@@ -170,7 +170,7 @@ jobs:
           commit: ${{ github.sha }}
           name: ${{ github.sha }}
           path: build
-          workflow_conclusion: completed,success,in_progress
+          workflow_conclusion: neutral
 
       - run: |
           echo "$ABC"
