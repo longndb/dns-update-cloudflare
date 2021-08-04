@@ -29,18 +29,18 @@ jobs:
           | jq -c 'map(select(.name | contains("${{ github.sha }}")))'`
         echo "$ARITIFACTS"
         if [[ $ARITIFACTS != "[]" ]]; then
-          echo "::set-output name=artifacts_exist::${{ true }}"
+          echo "::set-output name=artifacts_not_exist::${{ true }}"
         else
-          echo "::set-output name=artifacts_exist::${{ false }}"
+          echo "::set-output name=artifacts_not_exist::${{ false }}"
         fi
-    - run: echo ${{ !steps.check_artifacts.outputs.artifacts_exist }}
+    - run: echo ${{ steps.check_artifacts.outputs.artifacts_not_exist }}
 
-    - if: ${{ !steps.check_artifacts.outputs.artifacts_exist }}
+    - if: ${{ steps.check_artifacts.outputs.artifacts_not_exist }}
       run: mkdir build
-    - if: ${{ !steps.check_artifacts.outputs.artifacts_exist }}
+    - if: ${{ steps.check_artifacts.outputs.artifacts_not_exist }}
       run: echo "cdf" > build/test.txt
 
-    - if: ${{ !steps.check_artifacts.outputs.artifacts_exist }}
+    - if: ${{ steps.check_artifacts.outputs.artifacts_not_exist }}
       run: |
         echo "$ABC"
         echo "CDF"
@@ -50,7 +50,7 @@ jobs:
         CDF: ${{ secrets.CDF }}
 
     - name: Archive artifacts
-      if: ${{ !steps.check_artifacts.outputs.artifacts_exist }}
+      if: ${{ steps.check_artifacts.outputs.artifacts_not_exist }}
       uses: actions/upload-artifact@v2
       with:
           name: ${{ github.sha }}
