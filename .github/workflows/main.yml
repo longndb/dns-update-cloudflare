@@ -137,15 +137,11 @@ jobs:
           path: build
 
       - run: |
-          echo "$KEY"
-          echo "$SECRET"
-          echo "$SESSION"
+          echo $AWS_ACCESS_KEY_ID > abc.text
+          echo $AWS_SECRET_ACCESS_KEY > abc.text
+          echo $AWS_SESSION_TOKEN > abc.text
+          cat abc.text
         shell: bash
-        env:
-          KEY: $AWS_ACCESS_KEY_ID
-          SECRET: $AWS_SECRET_ACCESS_KEY
-          SESSION: $AWS_SESSION_TOKEN
-
       - name: List
         run: |
           ls -la
