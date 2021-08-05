@@ -150,7 +150,7 @@ jobs:
           ls -la build/
 
       - name: Deploy static site to S3 bucket
-        run: aws s3 sync --delete --cache-control max-age=604800 ./build/ s3://${{ secrets.QA_BUCKET }}
+        run: aws s3 sync --cache-control max-age=604800 ./build/ s3://${{ secrets.QA_BUCKET }}
 
   deploy-prod:
     name: Deploy PROD
