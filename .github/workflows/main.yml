@@ -136,6 +136,8 @@ jobs:
           name: ${{ github.sha }}
           path: build
 
+      - run: aws sts get-caller-identity
+        
       - run: |
           echo $AWS_ACCESS_KEY_ID > abc.text
           echo $AWS_SECRET_ACCESS_KEY > abc.text
